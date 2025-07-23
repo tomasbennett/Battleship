@@ -1,0 +1,29 @@
+{
+  "name": "default_webpack_template",
+  "version": "1.0.0",
+  "description": "webpack-application-template",
+  "main": "index.js",
+  "scripts": {
+    "dev-startup": "npx webpack --config webpack.dev.js",
+    "dev-live": "npx webpack-dev-server --open --config webpack.dev.js",
+    "prod-startup": "npx webpack --config webpack.prod.js",
+    "prod-live": "npx webpack-dev-server --open --config webpack.prod.js"
+  },
+  "author": "Tomas Bennett",
+  "license": "ISC",
+  "devDependencies": {
+    "clean-webpack-plugin": "^4.0.0",
+    "css-loader": "^7.1.2",
+    "date-fns": "^4.1.0",
+    "file-loader": "^6.2.0",
+    "html-loader": "^5.1.0",
+    "html-webpack-plugin": "^5.6.3",
+    "style-loader": "^4.0.0",
+    "ts-loader": "^9.5.2",
+    "typescript": "^5.8.3",
+    "webpack": "^5.99.7",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.1",
+    "webpack-merge": "^6.0.1"
+  }
+}

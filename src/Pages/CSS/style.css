@@ -1,0 +1,35 @@
+:root{
+    font-size: 62.5%;
+}
+
+
+*,
+*::before,
+*::after{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+
+    color: inherit;
+    font-size: inherit;
+    font-family: inherit;
+
+    box-sizing: border-box;
+}
+
+
+html,
+body{
+    font-size: 1.6rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: black;
+    color: white;
+
+    width: 100dvw;
+    height: 100dvh;
+}
