@@ -40,6 +40,8 @@ body{
     height: 100dvh;
 
     padding: .7rem;
+
+    /* overflow: auto; */
 }
 
 h1#battleship-heading{

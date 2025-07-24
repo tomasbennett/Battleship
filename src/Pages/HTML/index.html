@@ -4,129 +4,199 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <!-- <link rel="preload" href="../../Media/Fonts/Orbitron/Orbitron-VariableFont_wght.ttf" as="font" type="font/woff2" crossorigin="anonymous"> -->
 </head>
 <body>
     <h1 id="battleship-heading">BATTLESHIP</h1>
 
+
     <dialog id="select-ships-dialog">
 
-        <div id="dialog-header-text-container">
-            <h3>Please place your pieces</h3>
-            <p id="drag-drop-desc">Drag and drop the ships onto the grid to start</p>
-        </div>
-
-        <div class="game-board">
-
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-            <div class="game-space"></div>
-
-
-        </div>
+        <div id="select-grid">
     
-        <div id="reset-submit-btn-container">
-            <button data-clickable="not-ready" id="reset-btn" type="reset">Reset</button>
-            <button data-clickable="not-ready" id="submit-btn" type="submit">Submit</button>
+            <div id="dialog-header-text-container">
+                <h3>Please place your pieces</h3>
+                <p id="drag-drop-desc">Drag and drop the ships onto the grid to start</p>
+            </div>
+    
+            <div class="game-board">
+    
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+                <div class="game-space"></div>
+    
+    
+            </div>
+        
+            <div id="reset-submit-btn-container">
+                <button data-clickable="not-ready" id="reset-btn" type="reset">Reset</button>
+                <button data-clickable="not-ready" id="submit-btn" type="submit">Submit</button>
+            </div>
+    
+        </div>
+
+        <div id="select-ships">
+
+            <div id="dialog-ships-header">
+                <h4>Place all ships on the grid</h4>
+            </div>
+
+            <div id="ships-selection-container">
+
+                <div id="dialog-carrier" class="dialog-ship-container" data-ship-selected="not-selected">
+                    <div class="dialog-ship-image">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+
+                    </div>
+                    <p class="dialog-ship-title">Carrier (5sq)</p>
+                </div>
+                <div class="dialog-ship-container" data-ship-selected="not-selected">
+                    <div class="dialog-ship-image">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                    <p class="dialog-ship-title">Battleship (4sq)</p>
+                </div>
+                <div class="dialog-ship-container" data-ship-selected="not-selected">
+                    <div class="dialog-ship-image">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                    <p class="dialog-ship-title">Cruiser (3sq)</p>
+                </div>
+                
+                <div class="dialog-ship-container" data-ship-selected="not-selected">
+                    
+                    <div class="dialog-ship-image">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                    <p class="dialog-ship-title">Submarine (3sq)</p>
+                
+                </div>
+                
+                <div class="dialog-ship-container" data-ship-selected="not-selected">
+                    
+                    <div class="dialog-ship-image">
+                        <div></div>
+                        <div></div>
+                    </div>
+                    <p class="dialog-ship-title">Destroyer (2sq)</p>
+                
+                </div>
+
+            </div>
+
         </div>
 
     </dialog>
+
+
+
+
 </body>
 </html>
