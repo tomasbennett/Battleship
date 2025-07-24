@@ -33,7 +33,7 @@ const config = {
                 }
             },
             {
-                test: /\.(ttf|otf)$/i,
+                test: /\.(ttf|otf|woff2?|eot)$/i,
                 type: "asset/resource",
                 exclude: /^node_modules$/,
                 generator: {

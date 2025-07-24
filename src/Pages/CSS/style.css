@@ -1,7 +1,11 @@
+@font-face {
+    font-family: 'Orbitron';
+    src: url('../../Media/Fonts/Orbitron/Orbitron-VariableFont_wght.ttf') format('truetype');
+}
+
 :root{
     font-size: 62.5%;
 }
-
 
 *,
 *::before,
@@ -21,15 +25,31 @@
 
 html,
 body{
+    position: relative;
+
     font-size: 1.6rem;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    background-color: black;
+    background-color: rgb(114, 191, 216);
     color: white;
 
     width: 100dvw;
     height: 100dvh;
+
+    padding: .7rem;
+}
+
+h1#battleship-heading{
+    align-self: flex-start;
+    margin-right: auto;
+
+    font-size: 6rem;
+
+    font-family: "Orbitron", sans-serif;
+    /* font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal; */
 }

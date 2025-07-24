@@ -1,0 +1,1 @@
+export const dialogSelectShips: HTMLDialogElement = document.getElementById("select-ships-dialog")! as HTMLDialogElement;
