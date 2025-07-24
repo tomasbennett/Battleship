@@ -11,6 +11,11 @@
 
     <dialog id="select-ships-dialog">
 
+        <div id="dialog-header-text-container">
+            <h3>Please place your pieces</h3>
+            <p id="drag-drop-desc">Drag and drop the ships onto the grid to start</p>
+        </div>
+
         <div class="game-board">
 
             <div class="game-space"></div>
@@ -117,6 +122,11 @@
 
         </div>
     
+        <div id="reset-submit-btn-container">
+            <button data-clickable="not-ready" id="reset-btn" type="reset">Reset</button>
+            <button data-clickable="not-ready" id="submit-btn" type="submit">Submit</button>
+        </div>
+
     </dialog>
 </body>
 </html>

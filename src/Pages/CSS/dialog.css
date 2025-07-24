@@ -1,0 +1,117 @@
+dialog#select-ships-dialog{
+    height: 80%;
+    width: 45rem;
+
+    padding: 1.5rem;
+
+    background-color: rgb(27, 27, 27);
+
+    box-shadow: 0 0 5rem rgb(39, 39, 39);
+
+    border-radius: 1rem;
+
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+
+    margin: auto;
+}
+
+
+dialog#select-ships-dialog::backdrop{
+    background-color: rgba(20, 20, 20, 0.4);
+    
+}
+
+div#dialog-header-text-container{
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-direction: column;
+
+    row-gap: 2rem;
+}
+
+div#dialog-header-text-container > *{
+    text-align: center;
+}
+
+div#dialog-header-text-container > h3{
+    font-size: 3.5rem;
+
+    font-family: "Orbitron", sans-serif;
+}
+
+div#dialog-header-text-container > p#drag-drop-desc{
+    font-size: 2rem;
+    /* font-weight: bold; */
+}
+
+
+dialog#select-ships-dialog > .game-board{
+    margin: auto;
+}
+
+
+div#reset-submit-btn-container{
+    width: 100%;
+
+    padding: 0 3rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    column-gap: 2rem;
+}
+
+div#reset-submit-btn-container > *{
+    font-family: "Orbitron", sans-serif;
+
+    padding: 1.2rem 5rem;
+
+    border-radius: 5rem;
+
+    background-color: transparent;
+
+    border-width: .2rem;
+    border-style: solid;
+
+    transition: background-color 600ms ease-out;
+
+}
+
+*[data-clickable="not-ready"]{
+    --not-allowed-colour: #a3a3a3c2;
+    
+    cursor: not-allowed;
+
+    border-color: var(--not-allowed-colour);
+    color: var(--not-allowed-colour);
+
+    
+}
+
+*[data-clickable="ready"]{
+    cursor: pointer;
+
+    color: white;
+    border-color: white;
+
+
+}
+
+
+
+button#reset-btn[data-clickable="ready"]:hover{
+    background-color: red;
+
+}
+
+button#submit-btn[data-clickable="ready"]:hover{
+    background-color: green;
+
+}

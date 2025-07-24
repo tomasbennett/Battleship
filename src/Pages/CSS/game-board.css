@@ -1,43 +1,11 @@
-dialog#select-ships-dialog{
-    /* width: 100dvw;
-    height: 100dvh; */
-
-    box-shadow: 0 0 5rem rgb(65, 65, 65);
-
-    /* position: absolute;
-    top: 50%;
-    left: 50%;
-    
-    transform: translate(-50%, -50%); */
-
-    /* max-width: none;
-    max-height: none; */
-
-    /* display: flex; */
-    /* align-items: center;
-    justify-content: center; */
-
-    margin: auto;
-
-    background-color: transparent;
-}
-
-
-dialog#select-ships-dialog::backdrop{
-
-    
-
-    /* background-color: transparent; */
-    
-}
-
 .game-board{
     display: grid;
     grid-template-columns: repeat(10, 1fr);
+
 }
 
 .game-space{
-    width: 4.5rem;
+    width: 3.5rem;
     aspect-ratio: 1;
 
     border: .1rem white solid;
@@ -47,10 +15,8 @@ dialog#select-ships-dialog::backdrop{
     cursor: pointer;
 }
 
-/* .game-space:nth-child(odd){
-    background-color: rgb(25, 52, 128);
-}
 
-.game-space:nth-child(even){
-    background-color: rgb(25, 112, 128);
-} */
+.game-space:hover{
+    background-color: rgba(144, 238, 144);
+    background-color: rgb(194, 38, 69);
+}
