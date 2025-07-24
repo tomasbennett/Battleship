@@ -84,10 +84,14 @@ div#ships-selection-container{
 
 
 div#ships-selection-container > div.dialog-ship-container{
+    --border-width: .1rem;
+    
+    position: relative;
+
     flex: 1;
 
-    background-color: rgba(255, 255, 255, 0.2);
-    border: .1rem solid white;
+    background-color: rgb(92, 92, 92);
+    border: var(--border-width) solid white;
 
     padding: 0rem 2rem;
 
@@ -104,17 +108,49 @@ div#ships-selection-container > div.dialog-ship-container{
     row-gap: 1rem;
 
     cursor: pointer;
+
+    /* overflow: hidden; */
 }
+
+div#ships-selection-container > div.dialog-ship-container::before,
+div#ships-selection-container > div.dialog-ship-container::after{
+    content: '';
+
+    position: absolute;
+
+    
+
+    background-color: inherit;
+
+    /* z-index: -1; */
+
+
+}
+
+div#ships-selection-container > div.dialog-ship-container::before{
+    width: calc(100% + var(--border-width) * 2); 
+    height: 60%;
+}
+
+div#ships-selection-container > div.dialog-ship-container::after{
+    width: 60%; 
+    height: calc(100% + var(--border-width) * 2);
+}
+
 
 
 div.dialog-ship-container > div.dialog-ship-image{
     /* flex: 1; */
+    z-index: 1;
 
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
+div.dialog-ship-container > p{
+    z-index: 1;
+}
 
 div.dialog-ship-container > div.dialog-ship-image > div{
     aspect-ratio: 1;
