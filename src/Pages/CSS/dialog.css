@@ -1,4 +1,10 @@
 dialog{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
     height: 100%;
     width: 100%;
 
@@ -87,6 +93,7 @@ div#ships-selection-container > div.dialog-ship-container{
     --border-width: .1rem;
     
     position: relative;
+    z-index: 0;
 
     flex: 1;
 
@@ -107,9 +114,23 @@ div#ships-selection-container > div.dialog-ship-container{
 
     row-gap: 1rem;
 
-    cursor: pointer;
+    cursor: grab;
 
     /* overflow: hidden; */
+}
+
+
+div.dialog-ship-container > div.dialog-ship-image{
+    /* flex: 1; */
+    z-index: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+div.dialog-ship-container > p{
+    z-index: 1;
 }
 
 div#ships-selection-container > div.dialog-ship-container::before,
@@ -139,24 +160,13 @@ div#ships-selection-container > div.dialog-ship-container::after{
 
 
 
-div.dialog-ship-container > div.dialog-ship-image{
-    /* flex: 1; */
-    z-index: 1;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-div.dialog-ship-container > p{
-    z-index: 1;
-}
 
 div.dialog-ship-container > div.dialog-ship-image > div{
     aspect-ratio: 1;
     width: 3rem;
 
-    border: .2rem solid rgb(85, 85, 85);
+    border: .2rem solid rgb(190, 190, 190);
 
     background-color: grey;
 }
@@ -221,6 +231,8 @@ div#dialog-header-text-container > p#drag-drop-desc{
 
 div#select-grid > .game-board{
     margin: auto;
+
+    z-index: 1;
 }
 
 

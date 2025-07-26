@@ -20,6 +20,8 @@
     font-family: inherit;
 
     box-sizing: border-box;
+
+    user-select: none;
 }
 
 
@@ -41,6 +43,8 @@ body{
 
     padding: .7rem;
 
+    /* cursor: grabbing; */
+
     /* overflow: auto; */
 }
 
@@ -51,7 +55,26 @@ h1#battleship-heading{
     font-size: 6rem;
 
     font-family: "Orbitron", sans-serif;
-    /* font-optical-sizing: auto;
-    font-weight: 500;
-    font-style: normal; */
+}
+
+
+div#cursor-overlay{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    width: 100dvw;
+    height: 100dvh;
+
+    background-color: transparent;
+
+    
+    /* pointer-events: none; */
+    
+    cursor: grabbing;
+    user-select: none;
+
+    /* display: none; */
 }

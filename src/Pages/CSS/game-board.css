@@ -10,13 +10,26 @@
 
     border: .1rem white solid;
 
-    background-color: rgb(25, 52, 128);
-
-    cursor: pointer;
+    /* cursor: pointer; */
 }
 
 
-.game-space:hover{
+
+
+dialog .game-space[data-cell-available="no-interaction"]{
+    background-color: rgb(25, 52, 128);
+}
+
+dialog .game-space[data-cell-available="available"]{
     background-color: rgba(144, 238, 144);
+}
+
+dialog .game-space[data-cell-available="unavailable"]{
     background-color: rgb(194, 38, 69);
 }
+
+/******
+SO HERE WE NEED TO MAKE IT CLEAR THAT THE DIFFERENT COLOURS
+ARE TO DEFINE WHEN WE HAVE INTERACTED WITH IT,
+IF (NO INTERACTON) {SET BACK TO NO-INTERACTION}
+******/
