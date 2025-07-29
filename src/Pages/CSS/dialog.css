@@ -8,6 +8,12 @@ dialog{
     height: 100%;
     width: 100%;
 
+    max-width: 100%;
+    max-height: 100%;
+
+    min-width: none;
+    min-height: none;
+
     background-color: transparent;
 
     display: flex;
@@ -15,7 +21,7 @@ dialog{
     justify-content: center;
     column-gap: 4rem;
 
-    overflow: visible;
+    overflow: hidden;
 }
 
 dialog::backdrop{
@@ -24,7 +30,7 @@ dialog::backdrop{
 }
 
 
-dialog > *{
+dialog > *:not(#ship-draggable){
     flex-shrink: 0;
 
     background-color: rgb(27, 27, 27);
@@ -47,7 +53,7 @@ div#select-ships{
     justify-content: space-between;
 
 
-    row-gap: 4rem;
+    row-gap: 2rem;
 }
 
 
@@ -85,7 +91,7 @@ div#ships-selection-container{
     align-items: center;
     justify-content: space-between;
 
-    row-gap: 2rem;
+    row-gap: 1.5rem;
 }
 
 
@@ -112,7 +118,7 @@ div#ships-selection-container > div.dialog-ship-container{
     align-items: center;
     justify-content: center;
 
-    row-gap: 1rem;
+    row-gap: .5rem;
 
     cursor: grab;
 
@@ -120,7 +126,7 @@ div#ships-selection-container > div.dialog-ship-container{
 }
 
 
-div.dialog-ship-container > div.dialog-ship-image{
+div.dialog-ship-image{
     /* flex: 1; */
     z-index: 1;
 
@@ -162,11 +168,11 @@ div#ships-selection-container > div.dialog-ship-container::after{
 
 
 
-div.dialog-ship-container > div.dialog-ship-image > div{
+div.dialog-ship-image > div{
     aspect-ratio: 1;
-    width: 3rem;
+    width: var(--ship-width-height);
 
-    border: .2rem solid rgb(190, 190, 190);
+    border: var(--ship-border-width) solid rgb(190, 190, 190);
 
     background-color: grey;
 }
@@ -230,10 +236,12 @@ div#dialog-header-text-container > p#drag-drop-desc{
 
 
 div#select-grid > .game-board{
-    margin: auto;
+    /* margin: auto; */
+
 
     z-index: 1;
 }
+
 
 
 div#reset-submit-btn-container{
@@ -294,4 +302,57 @@ button#reset-btn[data-clickable="ready"]:hover{
 button#submit-btn[data-clickable="ready"]:hover{
     background-color: green;
 
+}
+
+
+
+p#rotate-instructions{
+    font-size: 2rem;
+    font-weight: bold;
+
+    opacity: 0;
+
+    font-family: "Orbitron", sans-serif;
+
+    
+}
+
+.fade-in-out{
+    transition: opacity 500ms linear;
+
+    opacity: 1 !important;
+
+    animation: colour-shift 500ms linear alternate infinite;
+}
+
+@keyframes fade-in-out {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+
+}
+
+
+@keyframes colour-shift {
+    0% { color: #00CCFF; }
+    50% { color: rgb(57, 126, 255); }
+    100% { color: rgba(122, 86, 255, 0.753); }
+}
+
+
+div#ship-draggable{
+    position: absolute;
+
+    
+    translate: -50% -50%;
+    transform-origin: center !important;
+    
+    cursor: grabbing;
+
+    opacity: 0.5;
+
+    transition: transform 300ms ease;
 }

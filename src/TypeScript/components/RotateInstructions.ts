@@ -1,0 +1,1 @@
+export const rotateInstructions: HTMLParagraphElement = document.getElementById("rotate-instructions")! as HTMLParagraphElement;

@@ -1,12 +1,20 @@
+import { IDirection } from "./models/IDirection";
 import { IShip } from "./models/IShip";
 
 export class Ship implements IShip {
-    private noHits: number
+    private noHits: number;
+    // private isHorizontal: boolean;
+
+    public direction: IDirection;
 
     constructor(
-        private shipLength: number
+        public length: number
     ) {
         this.noHits = 0;
+
+        this.direction = "horizontal";
+
+        // this.isHorizontal = true;
     }
 
     hit(): void {
@@ -14,7 +22,7 @@ export class Ship implements IShip {
     }
 
     isSunk(): boolean {
-        if (this.noHits >= this.shipLength) {
+        if (this.noHits >= this.length) {
             return true;
         }
 

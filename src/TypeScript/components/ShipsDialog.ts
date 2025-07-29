@@ -7,3 +7,13 @@ export const cruiserDialogContainer: HTMLElement = document.getElementById("dial
 export const submarineDialogContainer: HTMLElement = document.getElementById("dialog-submarine")!;
 
 export const destroyerDialogContainer: HTMLElement = document.getElementById("dialog-destroyer")!;
+
+
+
+export const allShipsDialog: HTMLElement[] = [
+    carrierDialogContainer,
+    battleshipDialogContainer,
+    cruiserDialogContainer,
+    submarineDialogContainer,
+    destroyerDialogContainer
+];

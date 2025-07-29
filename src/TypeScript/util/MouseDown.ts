@@ -6,6 +6,7 @@ export class MouseDown implements IMouseDown {
 
     constructor(
         private mouseDownCommand: ICommandEvent,
+        private mouseMoveCommand: ICommandEvent,
         private mouseUpCommand: ICommandEvent
     ) {
         this.isMouseDown = false;
@@ -16,7 +17,7 @@ export class MouseDown implements IMouseDown {
 
         this.mouseDownCommand.execute(e);
 
-        window.addEventListener("blur", this.mouseUp);
+        window.addEventListener("pointermove", this.mouseMoveCommand.execute);
     }
 
     public mouseUp: (e?: Event) => void = (e?: Event) => {
@@ -25,7 +26,7 @@ export class MouseDown implements IMouseDown {
 
             this.isMouseDown = false;
 
-            window.removeEventListener("blur", this.mouseUp);
+            window.removeEventListener("pointermove", this.mouseMoveCommand.execute);
         }
     }
 

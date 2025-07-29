@@ -1,24 +1,50 @@
-import { dialogSelectShips } from "./components/DialogSelectShips";
-import { carrierDialogContainer } from "./components/Ships";
+import { dialogSelectShips } from "./components/Dialog";
+import { rotateInstructions } from "./components/RotateInstructions";
+import { allShipsDialog, carrierDialogContainer } from "./components/ShipsDialog";
 import { ICommandEvent } from "./models/ICommand";
 import { IMouseDown } from "./models/IMouseDown";
-import { MouseFinal, MouseFollow } from "./services/MouseFollowCommand";
+import { ITraverseHTML } from "./models/ITraverse";
+import { MouseFinal, MouseMove } from "./services/MouseFollowCommand";
+import { SelectShip } from "./services/SelectShipCommand";
+import { FindClosestElem } from "./util/FindClosestElem";
 import { MouseDown } from "./util/MouseDown";
 
 dialogSelectShips.showModal();
 dialogSelectShips.style.display = "flex";
 
+const findElem: ITraverseHTML = new FindClosestElem();
 
-const mouseDownCommand: ICommandEvent = new MouseFollow();
+const mouseDownCommand: ICommandEvent = new SelectShip(
+    dialogSelectShips,
+    findElem,
+    rotateInstructions
+);
 const mouseUpCommand: ICommandEvent = new MouseFinal();
+const mouseMoveCommand: ICommandEvent = new MouseMove();
 
 const mouseDownClosure: IMouseDown = new MouseDown(
     mouseDownCommand,
+    mouseMoveCommand,
     mouseUpCommand
 );
 
-carrierDialogContainer.addEventListener("mousedown", mouseDownClosure.mouseDown);
-document.addEventListener("mouseup", mouseDownClosure.mouseUp);
+allShipsDialog.forEach((shipContainer) => {
+    shipContainer.addEventListener("pointerdown", mouseDownClosure.mouseDown);
+});
+
+document.addEventListener("pointerup", mouseDownClosure.mouseUp);
+
+
+// rotateInstructions.classList.add("fade-in-out");
+
+// setTimeout(() => {
+//     rotateInstructions.classList.remove("fade-in-out");
+// }, 5000);
+
+
+
+
+
 
 
 /*So you need to:

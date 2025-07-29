@@ -4,7 +4,12 @@
 }
 
 :root{
+    --ship-width-height: 3.5rem;
+    --ship-border-width: .1rem;
+
     font-size: 62.5%;
+
+
 }
 
 *,
@@ -41,21 +46,16 @@ body{
     width: 100dvw;
     height: 100dvh;
 
-    padding: .7rem;
+    
 
     /* cursor: grabbing; */
 
     /* overflow: auto; */
 }
 
-h1#battleship-heading{
-    align-self: flex-start;
-    margin-right: auto;
 
-    font-size: 6rem;
 
-    font-family: "Orbitron", sans-serif;
-}
+
 
 
 div#cursor-overlay{
