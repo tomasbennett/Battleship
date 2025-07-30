@@ -1,16 +1,21 @@
 import { GameBoard } from "./GameBoard";
-import { dialogSelectShips } from "./components/Dialog";
+import { dialogSelectShips, refreshBtn, submitBtn } from "./components/Dialog";
+import { gameSpacesDialog } from "./components/GameSpacesDialog";
 import { rotateInstructions } from "./components/RotateInstructions";
-import { allShipsDialog, carrierDialogContainer } from "./components/ShipsDialog";
+import { allShipsDialog, allShipsSelectContainer, carrierDialogContainer } from "./components/ShipsDialog";
 import { ICommandEvent } from "./models/ICommand";
-import { IFindCoordinate } from "./models/IFindCoordinate";
+import { IFindCoordinate, IFindHTML, IFindIndex } from "./models/IFindCoordinate";
 import { IGameBoard } from "./models/IGameBoard";
 import { IMouseDown } from "./models/IMouseDown";
+import { IRegistryHTML } from "./models/IRegistry";
 import { ITraverseHTML } from "./models/ITraverse";
+import { ResetDialogBtnCommand, SubmitDialogBtnCommand } from "./services/BoardBtnCommands";
 import { MouseFinal, MouseMove } from "./services/MouseFollowCommand";
 import { SelectShip } from "./services/SelectShipCommand";
+import { ShipHTMLRegistry } from "./services/ShipHTMLRegistry";
 import { FindClosestElem } from "./util/FindClosestElem";
 import { FindNodeCoordinate } from "./util/FindNodeCoordinate";
+import { FindShipGameSpaces, GridToOneD } from "./util/GridToOneD";
 import { MouseDown } from "./util/MouseDown";
 
 dialogSelectShips.showModal();
@@ -22,7 +27,28 @@ const userGameBoard: IGameBoard = new GameBoard(10, 10);
 
 const findCoord: IFindCoordinate = new FindNodeCoordinate(userGameBoard.xAxisLength);
 const findElem: ITraverseHTML = new FindClosestElem();
+const findIndx: IFindIndex = new GridToOneD(userGameBoard);
+const findHTML: IFindHTML = new FindShipGameSpaces(
+    userGameBoard,
+    gameSpacesDialog as HTMLDivElement[],
+    findIndx
+);
 
+const submitCommand: ICommandEvent = new SubmitDialogBtnCommand();
+
+const shipsUsedHTML: IRegistryHTML = new ShipHTMLRegistry();
+
+const noShips: number = allShipsSelectContainer.children.length;
+
+const refreshCommand: ICommandEvent = new ResetDialogBtnCommand(
+    submitBtn,
+    submitCommand,
+    noShips,
+    userGameBoard,
+    shipsUsedHTML,
+    findHTML
+
+); 
 
 const mouseDownCommand: ICommandEvent = new SelectShip(
     dialogSelectShips,
@@ -30,7 +56,15 @@ const mouseDownCommand: ICommandEvent = new SelectShip(
     rotateInstructions,
 
     userGameBoard,
-    findCoord
+    findCoord,
+
+    refreshBtn,
+    submitBtn,
+    submitCommand,
+    refreshCommand,
+
+    shipsUsedHTML,
+    noShips
 );
 
 const mouseUpCommand: ICommandEvent = new MouseFinal();

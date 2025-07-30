@@ -17,3 +17,6 @@ export const allShipsDialog: HTMLElement[] = [
     submarineDialogContainer,
     destroyerDialogContainer
 ];
+
+
+export const allShipsSelectContainer: HTMLElement = document.getElementById("ships-selection-container")!;

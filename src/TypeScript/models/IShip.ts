@@ -9,3 +9,12 @@ export interface IShip {
     isSunk(): boolean;
     
 }
+
+
+export interface IShipCoordinates {
+    ship: IShip;
+
+    xCoord: number;
+
+    yCoord: number;
+}

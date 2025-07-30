@@ -1,5 +1,5 @@
 import { IGameBoard } from "./models/IGameBoard";
-import { IShip } from "./models/IShip";
+import { IShip, IShipCoordinates } from "./models/IShip";
 
 export class GameBoard implements IGameBoard {
     public get yAxisLength(): number {
@@ -10,7 +10,11 @@ export class GameBoard implements IGameBoard {
         return this._xAxisLength;
     }
 
-    private ships: IShip[];
+    private _ships: IShipCoordinates[];
+
+    public get ships(): IShipCoordinates[] {
+        return this._ships;
+    }
 
     private grid: IShip[][] | null[][];
 
@@ -18,11 +22,21 @@ export class GameBoard implements IGameBoard {
         private _xAxisLength: number,
         private _yAxisLength: number
     ) {
-        this.ships = [];
+        this._ships = [];
 
         this.grid = Array.from({ length: this._yAxisLength }, () =>
             Array(this._xAxisLength).fill(null)
         );
+    }
+
+    removeShips(): void {
+        this._ships = [];
+
+        this.grid = Array.from({ length: this._yAxisLength }, () =>
+            Array(this._xAxisLength).fill(null)
+        );
+
+        
     }
 
     placeShip(ship: IShip, xCoord: number, yCoord: number): void {
@@ -37,7 +51,7 @@ export class GameBoard implements IGameBoard {
             this.grid[newY][newX] = ship;
         }
 
-        this.ships.push(ship);
+        this._ships.push({ship, xCoord, yCoord});
 
     }
 

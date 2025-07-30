@@ -1,22 +1,33 @@
 import { Ship } from "../Ship";
 import { ICommand, ICommandEvent, ICommandEventLastRun } from "../models/ICommand";
-import { IFindCoordinate } from "../models/IFindCoordinate";
+import { IFindCoordinate, IFindHTML } from "../models/IFindCoordinate";
 import { IGameBoard } from "../models/IGameBoard";
+import { IRegistryHTML } from "../models/IRegistry";
 import { IShip } from "../models/IShip";
 import { IShipRotate } from "../models/IShipRotate";
 import { ITraverseHTML } from "../models/ITraverse";
+import { ResetDialogBtnCommand, SubmitDialogBtnCommand } from "./BoardBtnCommands";
 import { DragShip } from "./DragShipsCommand";
 import { RefreshGrid, RightClickRotateShip } from "./RightClickCommand";
 import { ShipHTMLVisual, ShipCellValid } from "./ShipVisual";
 
 export class SelectShip implements ICommandEvent {
+
     constructor(
         private outerContainer: HTMLElement,
         private findElem: ITraverseHTML,
         private rightClickHTML: HTMLElement,
 
         private gameBoard: IGameBoard,
-        private findCoord: IFindCoordinate
+        private findCoord: IFindCoordinate,
+
+        private refreshBtn: HTMLElement,
+        private submitBtn: HTMLElement,
+        private submitCommand: ICommandEvent,
+        private refreshCommand: ICommandEvent,
+
+        private shipsHTMLUsed: IRegistryHTML,
+        private noShips: number
     ) {
 
     }
@@ -99,12 +110,34 @@ export class SelectShip implements ICommandEvent {
                     const coords: [number, number] | null = this.findCoord.findCoordinate(index);
                 
                     if (coords && this.gameBoard.canPlaceShip(...coords, ship)) {
+                        const prevShipLength: number = this.gameBoard.ships.length;
+
                         this.gameBoard.placeShip(ship, ...coords);
 
                         shipContainerHTML.style.display = "none";
+                        this.shipsHTMLUsed.addNew(shipContainerHTML);
 
                         const shipCells: HTMLElement[] = highlightCellCommand.lastElements;
                         shipCells.forEach((cell) => cell.classList.add("dialog-ship-cell"));
+
+                        
+
+                        if (this.gameBoard.ships.length === 1 && prevShipLength === 0) { 
+                            //ACTIVATE THE RESET BTN
+                              
+
+
+                            this.refreshBtn.setAttribute("data-clickable", "ready");
+
+                            this.refreshBtn.addEventListener("click", this.refreshCommand.execute);
+
+                        } else if (this.gameBoard.ships.length === this.noShips) {
+                            //ACTIVATE THE SUBMIT BTN
+                            
+                            this.submitBtn.setAttribute("data-clickable", "ready");
+
+                            this.submitBtn.addEventListener("click", this.submitCommand.execute);
+                        }
 
                     } else {
                         shipContainerHTML.style.opacity = "1"; 
