@@ -27,7 +27,7 @@ dialog .game-space[data-cell-available="available"]{
 }
 
 dialog .game-space[data-cell-available="unavailable"]{
-    background-color: rgb(194, 38, 69);
+    background-color: rgb(194, 38, 69) !important;
 }
 
 /******
@@ -35,3 +35,13 @@ SO HERE WE NEED TO MAKE IT CLEAR THAT THE DIFFERENT COLOURS
 ARE TO DEFINE WHEN WE HAVE INTERACTED WITH IT,
 IF (NO INTERACTON) {SET BACK TO NO-INTERACTION}
 ******/
+
+
+.dialog-ship-cell{
+    aspect-ratio: 1;
+    width: var(--ship-width-height);
+
+    border: var(--ship-border-width) solid rgb(190, 190, 190);
+
+    background-color: grey;
+}

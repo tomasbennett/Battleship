@@ -7,7 +7,7 @@ import { IShipRotate } from "../models/IShipRotate";
 import { ITraverseHTML } from "../models/ITraverse";
 import { DragShip } from "./DragShipsCommand";
 import { RefreshGrid, RightClickRotateShip } from "./RightClickCommand";
-import { ShipHTMLVisual, ShipPlaceGrid } from "./ShipVisual";
+import { ShipHTMLVisual, ShipCellValid } from "./ShipVisual";
 
 export class SelectShip implements ICommandEvent {
     constructor(
@@ -45,7 +45,7 @@ export class SelectShip implements ICommandEvent {
                 const shipLength: number = Array.from(shipImg.children).length;
                 const ship: IShip = new Ship(shipLength);
 
-                const highlightCellCommand: ICommandEventLastRun = new ShipPlaceGrid(
+                const highlightCellCommand: ICommandEventLastRun = new ShipCellValid(
                     this.gameBoard,
                     ship,
                     this.findCoord
@@ -75,17 +75,43 @@ export class SelectShip implements ICommandEvent {
 
 
                 document.addEventListener("pointerup", (e: MouseEvent) => {
-    
+                    
                     shipDraggable.remove();
                     this.rightClickHTML.classList.remove("fade-in-out");
-
+                    
                     window.removeEventListener("pointermove", shipDragCommand.execute);
-
+                    
                     window.removeEventListener("pointermove", highlightCellCommand.execute);
-    
+                    
                     document.removeEventListener("contextmenu", rightClickCommand.execute);
-
+                    
                     document.removeEventListener("contextmenu", refreshGrid.execute);
+                    
+                    highlightCellCommand.lastElements.forEach((cell) => cell.setAttribute("data-cell-available", "no-interaction"));
+                    
+
+                    const targets: Element[] = document.elementsFromPoint(e.clientX, e.clientY);
+                    const gameSpace: Element | undefined = targets.find(t => t.classList.contains("game-space"));
+                    if (!gameSpace) { shipContainerHTML.style.opacity = "1"; return; }
+
+                    const gameSpacesArr: Element[] = Array.from(gameSpace.parentElement!.children);
+                    const index: number = gameSpacesArr.indexOf(gameSpace);
+                    const coords: [number, number] | null = this.findCoord.findCoordinate(index);
+                
+                    if (coords && this.gameBoard.canPlaceShip(...coords, ship)) {
+                        this.gameBoard.placeShip(ship, ...coords);
+
+                        shipContainerHTML.style.display = "none";
+
+                        const shipCells: HTMLElement[] = highlightCellCommand.lastElements;
+                        shipCells.forEach((cell) => cell.classList.add("dialog-ship-cell"));
+
+                    } else {
+                        shipContainerHTML.style.opacity = "1"; 
+
+                    }
+                    
+
                 }, { once: true }); //REMOVE THIS SHIP FROM VIEW AND THE MOUSEMOVE EVENTLISTENER
 
                 

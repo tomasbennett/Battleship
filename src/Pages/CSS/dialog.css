@@ -89,7 +89,7 @@ div#ships-selection-container{
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-evenly;
 
     row-gap: 1.5rem;
 }
@@ -102,6 +102,8 @@ div#ships-selection-container > div.dialog-ship-container{
     z-index: 0;
 
     flex: 1;
+
+    max-height: 10rem;
 
     background-color: rgb(92, 92, 92);
     border: var(--border-width) solid white;
@@ -167,8 +169,7 @@ div#ships-selection-container > div.dialog-ship-container::after{
 
 
 
-
-div.dialog-ship-image > div{
+.dialog-ship-image > div{
     aspect-ratio: 1;
     width: var(--ship-width-height);
 
@@ -176,6 +177,7 @@ div.dialog-ship-image > div{
 
     background-color: grey;
 }
+
 
 
 

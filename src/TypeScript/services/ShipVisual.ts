@@ -27,7 +27,7 @@ export class ShipHTMLVisual implements IShipRotate {
 
 }
 
-export class ShipPlaceGrid implements ICommandEventLastRun {
+export class ShipCellValid implements ICommandEventLastRun {
     // private lastElement: HTMLElement | null;
     public lastElements: HTMLElement[];
 
@@ -85,7 +85,10 @@ export class ShipPlaceGrid implements ICommandEventLastRun {
                 let i = 0;
                 let currentIndex = index;
                 if (this.ship.direction === "vertical") {
-                    while (currentIndex < gameSpacesArr.length) {
+                    while (
+                        currentIndex < gameSpacesArr.length &&
+                        i <= this.ship.length
+                    ) {
 
                         gameSpacesArr[currentIndex].setAttribute("data-cell-available", "unavailable");
                         this.lastElements.push(gameSpacesArr[currentIndex] as HTMLElement);
@@ -94,8 +97,11 @@ export class ShipPlaceGrid implements ICommandEventLastRun {
 
                 } else {
                     const startRow = Math.floor(index / this.gameGrid.xAxisLength);
-                    while (currentIndex < gameSpacesArr.length &&
-                        Math.floor(currentIndex / this.gameGrid.xAxisLength) === startRow) {
+                    while (
+                        currentIndex < gameSpacesArr.length &&
+                        Math.floor(currentIndex / this.gameGrid.xAxisLength) === startRow &&
+                        i <= this.ship.length
+                    ) {
                         
                         gameSpacesArr[currentIndex].setAttribute("data-cell-available", "unavailable");
                         this.lastElements.push(gameSpacesArr[currentIndex] as HTMLElement);
@@ -118,3 +124,18 @@ export class ShipPlaceGrid implements ICommandEventLastRun {
 
 
 }
+
+// export class ShipPlaceGrid implements ICommandEvent {
+//     constructor(
+//         private gameBoard: IGameBoard,
+
+//         private shipHTMLContainer: HTMLElement,
+
+//         private shipCells: HTMLElement[]
+//     ) {}
+
+//     execute(e: Event | undefined): void {
+        
+//     }
+
+// } 
