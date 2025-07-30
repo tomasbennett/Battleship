@@ -13,11 +13,16 @@ export class MouseDown implements IMouseDown {
     }
 
     public mouseDown: (e: Event) => void = (e: Event) => {
-        this.isMouseDown = true;
+        if (!(e instanceof MouseEvent)) return;
+        if (e.button === 0) {
+            this.isMouseDown = true;
+    
+            this.mouseDownCommand.execute(e);
+    
+            window.addEventListener("pointermove", this.mouseMoveCommand.execute);
 
-        this.mouseDownCommand.execute(e);
+        }
 
-        window.addEventListener("pointermove", this.mouseMoveCommand.execute);
     }
 
     public mouseUp: (e?: Event) => void = (e?: Event) => {

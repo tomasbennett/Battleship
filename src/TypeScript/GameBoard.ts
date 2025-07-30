@@ -2,18 +2,26 @@ import { IGameBoard } from "./models/IGameBoard";
 import { IShip } from "./models/IShip";
 
 export class GameBoard implements IGameBoard {
+    public get yAxisLength(): number {
+        return this._yAxisLength;
+    }
+
+    public get xAxisLength(): number {
+        return this._xAxisLength;
+    }
+
     private ships: IShip[];
 
     private grid: IShip[][] | null[][];
 
     constructor(
-        private xAxisLength: number,
-        private yAxisLength: number
+        private _xAxisLength: number,
+        private _yAxisLength: number
     ) {
         this.ships = [];
 
-        this.grid = Array.from({ length: this.yAxisLength }, () =>
-            Array(this.xAxisLength).fill(null)
+        this.grid = Array.from({ length: this._yAxisLength }, () =>
+            Array(this._xAxisLength).fill(null)
         );
     }
 
@@ -54,11 +62,13 @@ export class GameBoard implements IGameBoard {
     // }
 
     canPlaceShip(x: number, y: number, ship: IShip): boolean {
+        // console.log(`x coord which should be col = ${x}, y coord which should be row = ${y}, ship dir = ${ship.direction}`);
+
         
         if (ship.direction === "horizontal") {
             
-            if (x >= 0 && x + ship.length <= this.xAxisLength &&
-            y >= 0 && y < this.yAxisLength) {
+            if (x >= 0 && x + ship.length <= this._xAxisLength &&
+            y >= 0 && y < this._yAxisLength) {
 
                 for (let i = 0; i < ship.length; i++) {
                     if (this.grid[y][x + i] !== null) {
@@ -74,8 +84,8 @@ export class GameBoard implements IGameBoard {
             
         } else {
 
-            if (y >= 0 && y + ship.length <= this.yAxisLength &&
-            x >= 0 && x < this.xAxisLength) {
+            if (y >= 0 && y + ship.length <= this._yAxisLength &&
+            x >= 0 && x < this._xAxisLength) {
 
                 for (let i = 0; i < ship.length; i++) {
                     if (this.grid[y + i][x] !== null) {

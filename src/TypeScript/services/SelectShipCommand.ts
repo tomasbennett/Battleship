@@ -1,18 +1,22 @@
 import { Ship } from "../Ship";
-import { ICommand, ICommandEvent } from "../models/ICommand";
+import { ICommand, ICommandEvent, ICommandEventLastRun } from "../models/ICommand";
 import { IFindCoordinate } from "../models/IFindCoordinate";
+import { IGameBoard } from "../models/IGameBoard";
 import { IShip } from "../models/IShip";
 import { IShipRotate } from "../models/IShipRotate";
 import { ITraverseHTML } from "../models/ITraverse";
 import { DragShip } from "./DragShipsCommand";
-import { RightClickRotateShip } from "./RightClickCommand";
-import { ShipHTMLVisual } from "./ShipVisual";
+import { RefreshGrid, RightClickRotateShip } from "./RightClickCommand";
+import { ShipHTMLVisual, ShipPlaceGrid } from "./ShipVisual";
 
 export class SelectShip implements ICommandEvent {
     constructor(
         private outerContainer: HTMLElement,
         private findElem: ITraverseHTML,
-        private rightClickHTML: HTMLElement
+        private rightClickHTML: HTMLElement,
+
+        private gameBoard: IGameBoard,
+        private findCoord: IFindCoordinate
     ) {
 
     }
@@ -37,27 +41,28 @@ export class SelectShip implements ICommandEvent {
                 shipDragCommand.execute(e);
     
                 window.addEventListener("pointermove", shipDragCommand.execute); //TAKE THE SHIP WITH YOU EVERYWHERE
+
+                const shipLength: number = Array.from(shipImg.children).length;
+                const ship: IShip = new Ship(shipLength);
+
+                const highlightCellCommand: ICommandEventLastRun = new ShipPlaceGrid(
+                    this.gameBoard,
+                    ship,
+                    this.findCoord
+                );
+
+
+                window.addEventListener("pointermove", highlightCellCommand.execute);
                 
                 this.outerContainer.appendChild(shipDraggable);
                 
-                document.addEventListener("pointerup", (e: MouseEvent) => {
-    
-                    shipDraggable.remove();
-                    this.rightClickHTML.classList.remove("fade-in-out");
 
-                    window.removeEventListener("pointermove", shipDragCommand.execute);
-    
-                }, { once: true }); //REMOVE THIS SHIP FROM VIEW AND THE MOUSEMOVE EVENTLISTENER
 
-                
+
 
 
                 this.rightClickHTML.classList.add("fade-in-out");
 
-                
-                const shipLength: number = Array.from(shipImg.children).length;
-                const ship: IShip = new Ship(shipLength);
-                
                 const rotateShip: IShipRotate = new ShipHTMLVisual(
                     ship,
                     shipDraggable
@@ -65,6 +70,28 @@ export class SelectShip implements ICommandEvent {
                 const rightClickCommand: ICommandEvent = new RightClickRotateShip(rotateShip);
                 document.addEventListener("contextmenu", rightClickCommand.execute);
 
+                const refreshGrid: ICommandEvent = new RefreshGrid(highlightCellCommand);
+                document.addEventListener("contextmenu", refreshGrid.execute);
+
+
+                document.addEventListener("pointerup", (e: MouseEvent) => {
+    
+                    shipDraggable.remove();
+                    this.rightClickHTML.classList.remove("fade-in-out");
+
+                    window.removeEventListener("pointermove", shipDragCommand.execute);
+
+                    window.removeEventListener("pointermove", highlightCellCommand.execute);
+    
+                    document.removeEventListener("contextmenu", rightClickCommand.execute);
+
+                    document.removeEventListener("contextmenu", refreshGrid.execute);
+                }, { once: true }); //REMOVE THIS SHIP FROM VIEW AND THE MOUSEMOVE EVENTLISTENER
+
+                
+
+
+                
 
 
                 // const gameSpaces: Element[] = Array.from(this.gameBoardHTML.children);

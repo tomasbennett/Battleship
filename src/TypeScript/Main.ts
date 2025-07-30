@@ -1,24 +1,38 @@
+import { GameBoard } from "./GameBoard";
 import { dialogSelectShips } from "./components/Dialog";
 import { rotateInstructions } from "./components/RotateInstructions";
 import { allShipsDialog, carrierDialogContainer } from "./components/ShipsDialog";
 import { ICommandEvent } from "./models/ICommand";
+import { IFindCoordinate } from "./models/IFindCoordinate";
+import { IGameBoard } from "./models/IGameBoard";
 import { IMouseDown } from "./models/IMouseDown";
 import { ITraverseHTML } from "./models/ITraverse";
 import { MouseFinal, MouseMove } from "./services/MouseFollowCommand";
 import { SelectShip } from "./services/SelectShipCommand";
 import { FindClosestElem } from "./util/FindClosestElem";
+import { FindNodeCoordinate } from "./util/FindNodeCoordinate";
 import { MouseDown } from "./util/MouseDown";
 
 dialogSelectShips.showModal();
 dialogSelectShips.style.display = "flex";
 
+
+const userGameBoard: IGameBoard = new GameBoard(10, 10);
+
+
+const findCoord: IFindCoordinate = new FindNodeCoordinate(userGameBoard.xAxisLength);
 const findElem: ITraverseHTML = new FindClosestElem();
+
 
 const mouseDownCommand: ICommandEvent = new SelectShip(
     dialogSelectShips,
     findElem,
-    rotateInstructions
+    rotateInstructions,
+
+    userGameBoard,
+    findCoord
 );
+
 const mouseUpCommand: ICommandEvent = new MouseFinal();
 const mouseMoveCommand: ICommandEvent = new MouseMove();
 

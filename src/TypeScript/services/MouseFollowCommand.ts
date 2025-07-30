@@ -2,45 +2,45 @@ import { ICommandEvent } from "../models/ICommand";
 
 export class MouseFollow implements ICommandEvent {
     execute(e: Event | undefined): void {
-        if (e instanceof MouseEvent) {
-            const xCoordinate: number = e.clientX;
-            const yCoordinate: number = e.clientY;
+        // if (e instanceof MouseEvent) {
+        //     const xCoordinate: number = e.clientX;
+        //     const yCoordinate: number = e.clientY;
 
-            console.log("Following mouse at:", xCoordinate, yCoordinate);
+        //     console.log("Following mouse at:", xCoordinate, yCoordinate);
 
-            const elem: Element | null = document.elementFromPoint(xCoordinate, yCoordinate);
+        //     const elem: Element | null = document.elementFromPoint(xCoordinate, yCoordinate);
 
-            if (elem !== null) {
-                console.dir(elem);
+        //     if (elem !== null) {
+        //         console.dir(elem);
 
-            }
+        //     }
 
 
-        }
+        // }
     }
 
 }
 
 export class MouseFinal implements ICommandEvent {
     execute(e: Event | undefined): void {
-        if (e instanceof MouseEvent) {
-            const xCoordinate: number = e.clientX;
-            const yCoordinate: number = e.clientY;
+        // if (e instanceof MouseEvent) {
+        //     const xCoordinate: number = e.clientX;
+        //     const yCoordinate: number = e.clientY;
 
-            console.log(`Final location is going to be x: ${xCoordinate} y: ${yCoordinate}`);
+        //     console.log(`Final location is going to be x: ${xCoordinate} y: ${yCoordinate}`);
 
-            const elem: Element | null = document.elementFromPoint(xCoordinate, yCoordinate);
+        //     const elem: Element | null = document.elementFromPoint(xCoordinate, yCoordinate);
 
-            if (elem !== null) {
-                console.dir(elem);
+        //     if (elem !== null) {
+        //         console.dir(elem);
                 
-            }
+        //     }
 
 
-            return;
-        }
+        //     return;
+        // }
 
-        console.log("Blur Window shown mouse reset");
+        // console.log("Blur Window shown mouse reset");
     }
 }
 
