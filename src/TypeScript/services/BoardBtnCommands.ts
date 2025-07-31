@@ -58,7 +58,9 @@ export class ResetDialogBtnCommand implements ICommandEvent {
 
 export class SubmitDialogBtnCommand implements ICommandEvent {
     constructor(
-
+        private dialog: HTMLDialogElement,
+        private gameBoard: IGameBoard,
+        private findHTML: IFindHTML
     ) {}
 
     public execute: (e: Event) => void = (e: Event): void => {
@@ -67,6 +69,9 @@ export class SubmitDialogBtnCommand implements ICommandEvent {
         const target: EventTarget | null = e.target;
         if (target === null) return;
 
+        this.dialog.close();
+
+        
 
     }
 }

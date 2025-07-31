@@ -36,9 +36,12 @@ body{
 
     font-size: 1.6rem;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: grid;
+    grid-template-areas: "header header"
+                         "main aside";
+    grid-template-columns: minmax(70rem, 1fr) minmax(25rem, 35rem);
+    grid-template-rows: max-content 
+                        1fr;
 
     background-color: rgb(114, 191, 216);
     color: white;

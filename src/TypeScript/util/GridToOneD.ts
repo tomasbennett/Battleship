@@ -1,3 +1,4 @@
+import { ICommandHTML } from "../models/ICommand";
 import { IFindCoordinate, IFindHTML, IFindIndex } from "../models/IFindCoordinate";
 import { IGameBoard } from "../models/IGameBoard";
 import { IShipCoordinates } from "../models/IShip";
@@ -21,7 +22,9 @@ export class FindShipGameSpaces implements IFindHTML {
         private gameBoard: IGameBoard,
         private gameSpaceArr: HTMLDivElement[],
 
-        private findIndx: IFindIndex
+        private findIndx: IFindIndex,
+
+        private htmlCommand: ICommandHTML
     ) {}
 
     returnGameSpaces(ship: IShipCoordinates): HTMLDivElement[] {

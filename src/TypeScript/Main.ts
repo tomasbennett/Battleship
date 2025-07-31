@@ -18,8 +18,8 @@ import { FindNodeCoordinate } from "./util/FindNodeCoordinate";
 import { FindShipGameSpaces, GridToOneD } from "./util/GridToOneD";
 import { MouseDown } from "./util/MouseDown";
 
-dialogSelectShips.showModal();
-dialogSelectShips.style.display = "flex";
+// dialogSelectShips.showModal();
+// dialogSelectShips.style.display = "flex";
 
 
 const userGameBoard: IGameBoard = new GameBoard(10, 10);
@@ -34,7 +34,9 @@ const findHTML: IFindHTML = new FindShipGameSpaces(
     findIndx
 );
 
-const submitCommand: ICommandEvent = new SubmitDialogBtnCommand();
+const submitCommand: ICommandEvent = new SubmitDialogBtnCommand(
+    dialogSelectShips
+);
 
 const shipsUsedHTML: IRegistryHTML = new ShipHTMLRegistry();
 
