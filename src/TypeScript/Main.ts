@@ -3,7 +3,7 @@ import { dialogSelectShips, refreshBtn, submitBtn } from "./components/Dialog";
 import { gameSpacesDialog } from "./components/GameSpacesDialog";
 import { rotateInstructions } from "./components/RotateInstructions";
 import { allShipsDialog, allShipsSelectContainer, carrierDialogContainer } from "./components/ShipsDialog";
-import { ICommandEvent } from "./models/ICommand";
+import { ICommandEvent, ICommandHTML, ICommandShipCoords } from "./models/ICommand";
 import { IFindCoordinate, IFindHTML, IFindIndex } from "./models/IFindCoordinate";
 import { IGameBoard } from "./models/IGameBoard";
 import { IMouseDown } from "./models/IMouseDown";
@@ -11,6 +11,7 @@ import { IRegistryHTML } from "./models/IRegistry";
 import { ITraverseHTML } from "./models/ITraverse";
 import { ResetDialogBtnCommand, SubmitDialogBtnCommand } from "./services/BoardBtnCommands";
 import { MouseFinal, MouseMove } from "./services/MouseFollowCommand";
+import { RemoveHTMLShip } from "./services/RemoveShipFromBoard";
 import { SelectShip } from "./services/SelectShipCommand";
 import { ShipHTMLRegistry } from "./services/ShipHTMLRegistry";
 import { FindClosestElem } from "./util/FindClosestElem";
@@ -24,18 +25,22 @@ import { MouseDown } from "./util/MouseDown";
 
 const userGameBoard: IGameBoard = new GameBoard(10, 10);
 
+const htmlRemoveShipCommand: ICommandHTML = new RemoveHTMLShip();
 
 const findCoord: IFindCoordinate = new FindNodeCoordinate(userGameBoard.xAxisLength);
 const findElem: ITraverseHTML = new FindClosestElem();
 const findIndx: IFindIndex = new GridToOneD(userGameBoard);
-const findHTML: IFindHTML = new FindShipGameSpaces(
+const findHTML: ICommandShipCoords = new FindShipGameSpaces(
     userGameBoard,
     gameSpacesDialog as HTMLDivElement[],
-    findIndx
+    findIndx,
+    htmlRemoveShipCommand
 );
 
 const submitCommand: ICommandEvent = new SubmitDialogBtnCommand(
-    dialogSelectShips
+    dialogSelectShips,
+    userGameBoard,
+    findHTML
 );
 
 const shipsUsedHTML: IRegistryHTML = new ShipHTMLRegistry();

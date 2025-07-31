@@ -1,4 +1,4 @@
-import { ICommandEvent } from "../models/ICommand";
+import { ICommandEvent, ICommandShipCoords } from "../models/ICommand";
 import { IFindHTML, IFindIndex } from "../models/IFindCoordinate";
 import { IGameBoard } from "../models/IGameBoard";
 import { IRegistryHTML } from "../models/IRegistry";
@@ -14,7 +14,7 @@ export class ResetDialogBtnCommand implements ICommandEvent {
 
         private shipsSelectUsed: IRegistryHTML,
 
-        private findHTML: IFindHTML
+        private findHTML: ICommandShipCoords
     ) {}
 
     public execute: (e: Event) => void = (e: Event): void => {
@@ -35,10 +35,7 @@ export class ResetDialogBtnCommand implements ICommandEvent {
         //FINALLY GET THE SHIPS COORDINATES OUT AND USING THEIR DIRECTION, LENGTH AND 
         this.gameBoard.ships.forEach((shipCoords) => {
 
-            this.findHTML.returnGameSpaces(shipCoords).forEach((gameSpace) => {
-                gameSpace.classList.remove("dialog-ship-cell");
-                gameSpace.setAttribute("data-cell-available", "no-interaction");
-            });            
+            this.findHTML.execute(shipCoords);          
 
 
         });
@@ -60,7 +57,7 @@ export class SubmitDialogBtnCommand implements ICommandEvent {
     constructor(
         private dialog: HTMLDialogElement,
         private gameBoard: IGameBoard,
-        private findHTML: IFindHTML
+        private findHTML: ICommandShipCoords
     ) {}
 
     public execute: (e: Event) => void = (e: Event): void => {

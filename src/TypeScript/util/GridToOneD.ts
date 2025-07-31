@@ -1,4 +1,4 @@
-import { ICommandHTML } from "../models/ICommand";
+import { ICommandHTML, ICommandShipCoords } from "../models/ICommand";
 import { IFindCoordinate, IFindHTML, IFindIndex } from "../models/IFindCoordinate";
 import { IGameBoard } from "../models/IGameBoard";
 import { IShipCoordinates } from "../models/IShip";
@@ -17,7 +17,7 @@ export class GridToOneD implements IFindIndex {
 
 }
 
-export class FindShipGameSpaces implements IFindHTML {
+export class FindShipGameSpaces implements ICommandShipCoords {
     constructor(
         private gameBoard: IGameBoard,
         private gameSpaceArr: HTMLDivElement[],
@@ -27,7 +27,7 @@ export class FindShipGameSpaces implements IFindHTML {
         private htmlCommand: ICommandHTML
     ) {}
 
-    returnGameSpaces(ship: IShipCoordinates): HTMLDivElement[] {
+    execute(ship: IShipCoordinates): void {
         const gameSpaces: HTMLDivElement[] = [];
         const index: number = this.findIndx.returnIndx(ship.xCoord, ship.yCoord)!;
 
@@ -37,10 +37,8 @@ export class FindShipGameSpaces implements IFindHTML {
                  
 
         for (let i = 0; i < ship.ship.length; i++) {
-            gameSpaces.push(this.gameSpaceArr[index + verticalFactor * i]);
-
+            // gameSpaces.push(this.gameSpaceArr[index + verticalFactor * i]);
+            this.htmlCommand.execute(this.gameSpaceArr[index + verticalFactor * i]);
         }
-
-        return gameSpaces;
     }
 }
