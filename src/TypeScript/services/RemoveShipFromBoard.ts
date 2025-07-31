@@ -8,3 +8,11 @@ export class RemoveHTMLShip implements ICommandHTML {
         e.setAttribute("data-cell-available", "no-interaction");
     }
 }
+
+export class AddHTMLShip implements ICommandHTML {
+    constructor() {}
+
+    execute(e: HTMLElement): void {
+        e.classList.add("dialog-ship-cell");
+    }
+}

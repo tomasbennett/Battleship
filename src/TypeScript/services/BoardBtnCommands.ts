@@ -67,8 +67,12 @@ export class SubmitDialogBtnCommand implements ICommandEvent {
         if (target === null) return;
 
         this.dialog.close();
+        this.dialog.style.display = "none";
 
-        
+        this.gameBoard.ships.forEach((ship) => {
+            this.findHTML.execute(ship);
+
+        });
 
     }
 }
