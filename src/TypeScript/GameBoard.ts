@@ -16,7 +16,7 @@ export class GameBoard implements IGameBoard {
         return this._ships;
     }
 
-    private grid: IShip[][] | null[][];
+    public grid: IShip[][] | null[][];
 
     constructor(
         private _xAxisLength: number,

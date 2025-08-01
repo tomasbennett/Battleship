@@ -5,6 +5,10 @@
 }
 
 .game-space{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     width: var(--ship-width-height);
     aspect-ratio: 1;
 
@@ -13,8 +17,24 @@
     background-color: rgb(25, 52, 128);
 
     /* cursor: pointer; */
+
+    overflow: hidden;
 }
 
+.game-space > svg{
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+}
+
+.game-space > svg > circle.miss{
+    fill: white;
+}
+
+.game-space > svg > circle.hit{
+    fill: red;
+}
 
 
 /* 
