@@ -11,8 +11,6 @@ abstract class ShotHTML implements ICommandHTML {
         const svg: SVGSVGElement = document.createElementNS(SVG_NS, "svg") as SVGSVGElement;
 
         svg.setAttribute("viewBox", "0 0 100 100");
-        // svg.setAttribute("width", "100");
-        // svg.setAttribute("height", "100");
 
         const circle: SVGCircleElement = document.createElementNS(SVG_NS, "circle") as SVGCircleElement;
 

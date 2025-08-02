@@ -24,7 +24,6 @@ export class ChooseAICoordinates implements ITargetingState {
         this._priorityDirectionsStack = value;
     }
 
-
     constructor(
         private availableSpaces: IRegistryRemoveSpaces,
 
