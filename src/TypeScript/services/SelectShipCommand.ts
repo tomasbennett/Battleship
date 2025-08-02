@@ -6,7 +6,7 @@ import { IRegistryHTML } from "../models/IRegistry";
 import { IShip } from "../models/IShip";
 import { IShipRotate } from "../models/IShipRotate";
 import { ITraverseHTML } from "../models/ITraverse";
-import { ResetDialogBtnCommand, SubmitDialogBtnCommand } from "./BoardBtnCommands";
+import { SubmitDialogBtnCommand } from "./BoardBtnCommands";
 import { DragShip } from "./DragShipsCommand";
 import { RefreshGrid, RightClickRotateShip } from "./RightClickCommand";
 import { ShipHTMLVisual, ShipCellValid } from "./ShipVisual";

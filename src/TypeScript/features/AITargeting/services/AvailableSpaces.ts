@@ -3,12 +3,16 @@ import { IShip } from "../../../models/IShip";
 import { IAvailableSpacesShip } from "../models/IAvailableSpaces";
 
 export class FindAvailableSpaces implements IAvailableSpacesShip {
-    private shipSpaces: [number, number][];
+    private _shipSpaces: [number, number][];
+
+    public set shipSpaces(value: [number, number][]) {
+        this._shipSpaces = value;
+    }
 
     constructor(
         private computerGameBoard: IGameBoard
     ) {
-        this.shipSpaces = [];
+        this._shipSpaces = [];
     }
 
     findAvailableSpaces(ship: IShip): void {
@@ -27,7 +31,7 @@ export class FindAvailableSpaces implements IAvailableSpacesShip {
                 for (let i = 0; i < ship.length; i++) {
                     const checkX = x + i * dx;
                     const checkY = y + i * dy;
-                    if (this.shipSpaces.some(([xShip, yShip]) => xShip === checkX && yShip === checkY)) {
+                    if (this._shipSpaces.some(([xShip, yShip]) => xShip === checkX && yShip === checkY)) {
                         isValid = false;
                         break;
                     }
@@ -46,7 +50,7 @@ export class FindAvailableSpaces implements IAvailableSpacesShip {
         for (let i = 0; i < ship.length; i++) {
             const xShipCoord: number = shipCoords[0] + i * dx;
             const yShipCoord: number = shipCoords[1] + i * dy;
-            this.shipSpaces.push([xShipCoord, yShipCoord]);
+            this._shipSpaces.push([xShipCoord, yShipCoord]);
 
         }
 

@@ -4,6 +4,7 @@ import "./Pages/CSS/main.css";
 import "./Pages/CSS/header.css";
 import "./Pages/CSS/aside.css";
 import "./Pages/CSS/game-board.css";
+import "./Pages/CSS/end-game-dialog.css";
 
 import "./TypeScript/Main.ts";
 

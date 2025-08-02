@@ -28,7 +28,6 @@ export class FindShipGameSpaces implements ICommandShipCoords {
     ) {}
 
     execute(ship: IShipCoordinates): void {
-        const gameSpaces: HTMLDivElement[] = [];
         const index: number = this.findIndx.returnIndx(ship.xCoord, ship.yCoord)!;
 
         const verticalFactor: number = ship.ship.direction === "vertical" ?

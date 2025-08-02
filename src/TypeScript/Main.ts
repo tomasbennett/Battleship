@@ -1,20 +1,37 @@
 import { GameBoard } from "./GameBoard";
 import { dialogSelectShips, refreshBtn, submitBtn } from "./components/Dialog";
-import { userGameSpaces } from "./components/GameBoardMain";
+import { endGameDesc, endGameDialog, endGameHeader, endGameResetBtn } from "./components/EndGame";
+import { computerGameSpaces, userGameSpaces } from "./components/GameBoardMain";
 import { gameSpacesDialog } from "./components/GameSpacesDialog";
 import { rotateInstructions } from "./components/RotateInstructions";
 import { allShipsDialog, allShipsSelectContainer, carrierDialogContainer } from "./components/ShipsDialog";
-import { ICommandEvent, ICommandHTML, ICommandShipCoords } from "./models/ICommand";
+import { IAvailableSpacesShip } from "./features/AITargeting/models/IAvailableSpaces";
+import { IDirectionDetermination } from "./features/AITargeting/models/ICoordinateDirDetermine";
+import { IRegistryRemoveSpaces } from "./features/AITargeting/models/IRegistryRemoval";
+import { ITargetingState } from "./features/AITargeting/models/IStateManager";
+import { FindAvailableSpaces } from "./features/AITargeting/services/AvailableSpaces";
+import { ChooseAICoordinates } from "./features/AITargeting/services/ChooseAICoords";
+import { FireShotAI } from "./features/AITargeting/services/FireShotAI";
+import { GridAvailableShots } from "./features/AITargeting/services/GridAvailableSpaces";
+import { HitShotHTML, MissedShotHTML } from "./features/AITargeting/services/HTMLShot";
+import { ShipsSunkRegistry } from "./features/AITargeting/services/ShipsSunkRegistry";
+import { CoordinateDirections } from "./features/AITargeting/util/CoordinatesDirection";
+import { ICommand, ICommandEvent, ICommandHTML, ICommandShipCoords } from "./models/ICommand";
 import { IFindCoordinate, IFindIndex } from "./models/IFindCoordinate";
 import { IGameBoard } from "./models/IGameBoard";
 import { IMouseDown } from "./models/IMouseDown";
-import { IRegistryHTML } from "./models/IRegistry";
+import { IRegistryCoords, IRegistryHTML, IRegistryShips } from "./models/IRegistry";
+import { ISelection } from "./models/ISelection";
 import { ITraverseHTML } from "./models/ITraverse";
-import { ResetDialogBtnCommand, SubmitDialogBtnCommand } from "./services/BoardBtnCommands";
+import { ResetDialogCommand, SubmitDialogBtnCommand } from "./services/BoardBtnCommands";
+import { RandomSelection } from "./services/ComputerCoordSelection";
 import { MouseFinal, MouseMove } from "./services/MouseFollowCommand";
 import { AddHTMLShip, RemoveHTMLShip } from "./services/RemoveShipFromBoard";
+import { ComputerWonCommand, RestartAllCommand, UserWonCommand } from "./services/RestartGameCommand";
 import { SelectShip } from "./services/SelectShipCommand";
 import { ShipHTMLRegistry } from "./services/ShipHTMLRegistry";
+import { ShotAtCoordsRegistry } from "./services/ShotAtRegistry";
+import { ShootCommand } from "./services/StartGameCommand";
 import { FindClosestElem } from "./util/FindClosestElem";
 import { FindNodeCoordinate } from "./util/FindNodeCoordinate";
 import { FindShipGameSpaces, GridToOneD } from "./util/GridToOneD";
@@ -22,6 +39,8 @@ import { MouseDown } from "./util/MouseDown";
 
 dialogSelectShips.showModal();
 dialogSelectShips.style.display = "flex";
+
+// endGameDialog.showModal();
 
 
 const userGameBoard: IGameBoard = new GameBoard(10, 10);
@@ -47,22 +66,83 @@ const findHTMLUser: ICommandShipCoords = new FindShipGameSpaces(
     htmlAddShipCommand
 );
 
+const gameOverUser: ICommand = new UserWonCommand(
+    endGameDialog,
+    endGameHeader,
+    endGameDesc
+);
+const gameOverComputer: ICommand = new ComputerWonCommand(
+    endGameDialog,
+    endGameHeader,
+    endGameDesc
+);
 
 
 
+const computerGameBoard: IGameBoard = new GameBoard(userGameBoard.xAxisLength, userGameBoard.yAxisLength);
+const computerFindCoords: IFindCoordinate = new FindNodeCoordinate(computerGameBoard.xAxisLength);
+const computerShotAtSpaces: IRegistryCoords = new ShotAtCoordsRegistry();
 
+const missCommand: ICommandHTML = new MissedShotHTML();
+const hitCommand: ICommandHTML = new HitShotHTML();
+
+const usersAvailableSpaces: IRegistryRemoveSpaces = new GridAvailableShots(userGameBoard);
+
+const randomSelection: ISelection = new RandomSelection(usersAvailableSpaces);
+
+const targetSelector: ITargetingState = new ChooseAICoordinates(
+    usersAvailableSpaces,
+    randomSelection
+);
+
+const shipSunkRegistry: IRegistryShips = new ShipsSunkRegistry();
+
+const dirDetermination: IDirectionDetermination = new CoordinateDirections();
+
+const fireShotAI: ICommand = new FireShotAI(
+    targetSelector,
+    userGameBoard,
+    usersAvailableSpaces,
+    findIndx,
+    userGameSpaces,
+    hitCommand,
+    missCommand,
+    shipSunkRegistry,
+    gameOverComputer,
+    dirDetermination
+
+)
+
+const shootCommand: ICommandEvent = new ShootCommand(
+    computerGameBoard,
+    computerGameSpaces,
+    computerFindCoords,
+    computerShotAtSpaces,
+    missCommand,
+    hitCommand,
+    fireShotAI,
+    gameOverUser
+
+);
+
+
+const availableShipsComputer: IAvailableSpacesShip = new FindAvailableSpaces(computerGameBoard);
 
 const submitCommand: ICommandEvent = new SubmitDialogBtnCommand(
     dialogSelectShips,
     userGameBoard,
-    findHTMLUser
-);
+    findHTMLUser,
+    shootCommand,
+    availableShipsComputer
+
+)
 
 const shipsUsedHTML: IRegistryHTML = new ShipHTMLRegistry();
 
 const noShips: number = allShipsSelectContainer.children.length;
 
-const refreshCommand: ICommandEvent = new ResetDialogBtnCommand(
+const refreshCommand: ICommandEvent = new ResetDialogCommand(
+    refreshBtn,
     submitBtn,
     submitCommand,
     noShips,
@@ -103,6 +183,33 @@ allShipsDialog.forEach((shipContainer) => {
 });
 
 document.addEventListener("pointerup", mouseDownClosure.mouseUp);
+
+const findHTMLUserDelete: ICommandShipCoords = new FindShipGameSpaces(
+    userGameBoard,
+    userGameSpaces,
+    findIndx,
+    htmlRemoveShipCommand
+);
+
+const resetAll: ICommandEvent = new RestartAllCommand(
+    endGameDialog,
+    refreshCommand,
+    targetSelector,
+    findHTMLUserDelete,
+    findIndx,
+    userGameSpaces,
+    computerShotAtSpaces,
+    findIndx,
+    computerGameSpaces,
+    usersAvailableSpaces,
+    shipSunkRegistry,
+    availableShipsComputer,
+    userGameBoard,
+    computerGameBoard
+
+
+)
+endGameResetBtn.addEventListener("click", resetAll.execute)
 
 
 // rotateInstructions.classList.add("fade-in-out");
