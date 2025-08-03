@@ -1,3 +1,4 @@
+import { IDirection } from "../../../models/IDirection";
 import { IGameBoard } from "../../../models/IGameBoard";
 import { IShip } from "../../../models/IShip";
 import { IAvailableSpacesShip } from "../models/IAvailableSpaces";
@@ -18,11 +19,14 @@ export class FindAvailableSpaces implements IAvailableSpacesShip {
     findAvailableSpaces(ship: IShip): void {
         const availableSpaces: [number, number][] = [];
 
+        const directions: IDirection[] = ["horizontal", "vertical"];
+        ship.direction = directions[Math.floor(Math.random() * directions.length)];
+
         const dx: number = ship.direction === "horizontal" ? 1 : 0;
         const dy: number = ship.direction === "vertical" ? 1 : 0;
 
-        const xReducedBorder: number = this.computerGameBoard.xAxisLength - ship.length * dx + 1;
-        const yReducedBorder: number = this.computerGameBoard.yAxisLength - ship.length * dy + 1;
+        const xReducedBorder: number = this.computerGameBoard.xAxisLength - ship.length * dx;
+        const yReducedBorder: number = this.computerGameBoard.yAxisLength - ship.length * dy;
 
         for (let y = 0; y < yReducedBorder; y++) {
             for (let x = 0; x < xReducedBorder; x++) {

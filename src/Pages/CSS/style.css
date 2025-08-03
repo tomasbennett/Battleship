@@ -6,6 +6,7 @@
 :root{
     --ship-width-height: 3.5rem;
     --ship-border-width: .1rem;
+    --component-background-colour: rgb(27, 27, 27);
 
     font-size: 62.5%;
 

@@ -73,14 +73,18 @@ export class RestartAllCommand implements ICommandEvent {
         private userShotAtCoords: IRegistryCoords,
         private computerFindIndx: IFindIndex,
         private computerGameSpaces: HTMLDivElement[],
-        private computerShotAtCoords: IRegistryRemoveSpaces,
+        private computerShotAtCoords: IRegistryCoords,
 
         private shipSunkRegistryComputers: IRegistryShips,
         private shipSpacesRegistryComputers: IAvailableSpacesShip,
         
 
         private userGameBoard: IGameBoard,
-        private computerGameBoard: IGameBoard
+        private computerGameBoard: IGameBoard,
+
+        private shipsSelectDialog: HTMLDialogElement,
+
+        private userBoardAvailableTargets: IRegistryRemoveSpaces
     ) {}
 
     public execute: (e: Event | undefined) => void = (e: Event | undefined): void => {
@@ -95,7 +99,7 @@ export class RestartAllCommand implements ICommandEvent {
             const index: number | null = this.userFindIndx.returnIndx(x, y);
             if (index === null) return;
 
-            const gameSpace: HTMLDivElement = this.userGameSpaces[index];
+            const gameSpace: HTMLDivElement = this.computerGameSpaces[index];
             const svg: HTMLOrSVGElement | null = gameSpace.querySelector("svg");
             if (svg === null) return;
             (svg as HTMLElement).remove();
@@ -108,7 +112,7 @@ export class RestartAllCommand implements ICommandEvent {
             const index: number | null = this.computerFindIndx.returnIndx(x, y);
             if (index === null) return;
 
-            const gameSpace: HTMLDivElement = this.computerGameSpaces[index];
+            const gameSpace: HTMLDivElement = this.userGameSpaces[index];
             const svg: HTMLOrSVGElement | null = gameSpace.querySelector("svg");
             if (svg === null) return;
             (svg as HTMLElement).remove();
@@ -129,6 +133,12 @@ export class RestartAllCommand implements ICommandEvent {
 
         this.userGameBoard.removeShips();
         this.computerGameBoard.removeShips();
+
+        this.userBoardAvailableTargets.refresh();
+
+        this.shipsSelectDialog.showModal();
+        this.shipsSelectDialog.style.display = "flex";
+
 
 
     }

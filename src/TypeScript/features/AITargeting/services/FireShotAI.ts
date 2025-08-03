@@ -1,7 +1,7 @@
 import { ICommand, ICommandHTML } from "../../../models/ICommand";
-import { IFindIndex } from "../../../models/IFindCoordinate";
+import { IFindIndex, IFindShipsFullCoords } from "../../../models/IFindCoordinate";
 import { IGameBoard } from "../../../models/IGameBoard";
-import { IRegistryShips } from "../../../models/IRegistry";
+import { IRegistryCoords, IRegistryShips } from "../../../models/IRegistry";
 import { IShip } from "../../../models/IShip";
 import { IDirectionDetermination } from "../models/ICoordinateDirDetermine";
 import { IRegistryRemoveSpaces } from "../models/IRegistryRemoval";
@@ -27,6 +27,10 @@ export class FireShotAI implements ICommand {
         private gameOverAICommand: ICommand,
 
         private directionDetermination: IDirectionDetermination,
+
+        private findUserShipsFullCoords: IFindShipsFullCoords,
+
+        private shotAtCoords: IRegistryCoords
     ) {}
 
     execute(): void {
@@ -35,13 +39,32 @@ export class FireShotAI implements ICommand {
 
         const [xNextCoords, yNextCoords]: [number, number] = nextTargetCoords;
 
-        const isHit: boolean = this.enemyGameBoard.ships.some(({xCoord, yCoord}) => {
-            return xCoord === xNextCoords && yCoord === yNextCoords;
-        });
+
+        let isHit: boolean = false;
+        for (const ship of this.enemyGameBoard.ships) {
+            const fullShipCoords: [number, number][] = this.findUserShipsFullCoords.findShipsFullCoords(ship);
+            if (fullShipCoords.some(([x, y]) => x === xNextCoords && y === yNextCoords)) {
+                isHit = true;
+                break;
+            }
+
+        }
+
+        // this.enemyGameBoard.ships.forEach((ship) => {
+        //     const fullShipCoords: [number, number][] = this.findUserShipsFullCoords.findShipsFullCoords(ship);
+
+        // });
+        // const isHit: boolean = this.enemyGameBoard.ships.some(({xCoord, yCoord}) => {
+        //     return xCoord === xNextCoords && yCoord === yNextCoords;
+        // }); //SO THIS ONLY CHOOSES THE COORDINATE OF THE SHIP NOT THE FULL COORDINATES INCLUDING THE LENGTH
 
         const gameSpaceIndx: number | null = this.findIndx.returnIndx(xNextCoords, yNextCoords);
         if (gameSpaceIndx === null) return;
         const gameSpaceDiv: HTMLDivElement = this.gameSpaceHTMLArr[gameSpaceIndx];
+
+        this.removeAvailableSpace.remove(nextTargetCoords);
+        this.shotAtCoords.addNew(nextTargetCoords);
+
 
         if (!isHit) {
             this.missShotCommand.execute(gameSpaceDiv);
@@ -75,17 +98,19 @@ export class FireShotAI implements ICommand {
                 
                 if (this.shipsSunkRegistry.getAll().length >= this.enemyGameBoard.ships.length) {
                     this.gameOverAICommand.execute();
-                    
+                    return;
+
                 }
                 
                 
             }
             
-            if (this.nextTargetSelector.priorityDirectionsStack.length === 0) { this.nextTargetSelector.originalShot = null; } //Could work a queue system whereby all coordinates are checked before following
-
+            
         }
+        if (this.nextTargetSelector.priorityDirectionsStack.length === 0) { this.nextTargetSelector.originalShot = null; } //Could work a queue system whereby all coordinates are checked before following
 
-        this.removeAvailableSpace.remove(nextTargetCoords);
+        
+
     }
 
     

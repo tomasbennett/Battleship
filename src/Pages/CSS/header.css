@@ -10,7 +10,11 @@ header{
 
     padding: .7rem;
 
-    background-color: red;
+    background-color: var(--component-background-colour);
+
+    border-color: white;
+    border-style: solid;
+    border-bottom-width: .1rem;
 }
 
 h1#battleship-heading{

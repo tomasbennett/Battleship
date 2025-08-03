@@ -17,7 +17,7 @@ import { HitShotHTML, MissedShotHTML } from "./features/AITargeting/services/HTM
 import { ShipsSunkRegistry } from "./features/AITargeting/services/ShipsSunkRegistry";
 import { CoordinateDirections } from "./features/AITargeting/util/CoordinatesDirection";
 import { ICommand, ICommandEvent, ICommandHTML, ICommandShipCoords } from "./models/ICommand";
-import { IFindCoordinate, IFindIndex } from "./models/IFindCoordinate";
+import { IFindCoordinate, IFindIndex, IFindShipsFullCoords } from "./models/IFindCoordinate";
 import { IGameBoard } from "./models/IGameBoard";
 import { IMouseDown } from "./models/IMouseDown";
 import { IRegistryCoords, IRegistryHTML, IRegistryShips } from "./models/IRegistry";
@@ -34,7 +34,7 @@ import { ShotAtCoordsRegistry } from "./services/ShotAtRegistry";
 import { ShootCommand } from "./services/StartGameCommand";
 import { FindClosestElem } from "./util/FindClosestElem";
 import { FindNodeCoordinate } from "./util/FindNodeCoordinate";
-import { FindShipGameSpaces, GridToOneD } from "./util/GridToOneD";
+import { FindShipCoordinates, FindShipGameSpaces, GridToOneD } from "./util/GridToOneD";
 import { MouseDown } from "./util/MouseDown";
 
 dialogSelectShips.showModal();
@@ -98,6 +98,9 @@ const targetSelector: ITargetingState = new ChooseAICoordinates(
 const shipSunkRegistry: IRegistryShips = new ShipsSunkRegistry();
 
 const dirDetermination: IDirectionDetermination = new CoordinateDirections();
+const findUsersFullShipsCoords: IFindShipsFullCoords = new FindShipCoordinates();
+
+const userShotAtCoords: IRegistryCoords = new ShotAtCoordsRegistry();
 
 const fireShotAI: ICommand = new FireShotAI(
     targetSelector,
@@ -109,9 +112,11 @@ const fireShotAI: ICommand = new FireShotAI(
     missCommand,
     shipSunkRegistry,
     gameOverComputer,
-    dirDetermination
+    dirDetermination,
+    findUsersFullShipsCoords,
+    userShotAtCoords
 
-)
+);
 
 const shootCommand: ICommandEvent = new ShootCommand(
     computerGameBoard,
@@ -201,14 +206,17 @@ const resetAll: ICommandEvent = new RestartAllCommand(
     computerShotAtSpaces,
     findIndx,
     computerGameSpaces,
-    usersAvailableSpaces,
+    userShotAtCoords,
     shipSunkRegistry,
     availableShipsComputer,
     userGameBoard,
-    computerGameBoard
+    computerGameBoard,
+    dialogSelectShips,
+    usersAvailableSpaces
 
 
-)
+);
+
 endGameResetBtn.addEventListener("click", resetAll.execute)
 
 

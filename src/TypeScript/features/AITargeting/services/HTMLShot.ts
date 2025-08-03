@@ -16,7 +16,7 @@ abstract class ShotHTML implements ICommandHTML {
 
         circle.setAttribute("cx", "50");
         circle.setAttribute("cy", "50");
-        circle.setAttribute("r", "40");
+        circle.setAttribute("r", "30");
         circle.classList.add(this.classValue);
 
         svg.appendChild(circle);

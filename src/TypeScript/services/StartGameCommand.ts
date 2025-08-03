@@ -68,28 +68,38 @@ export class ShootCommand implements ICommandEvent {
             const isAlreadyShotSpace: boolean = this.alreadyShotAtSpaces.getAll().some(([x, y]) => x === xShot && y === yShot);
             if (isAlreadyShotSpace) return;
 
+
+            this.alreadyShotAtSpaces.addNew(coords);
+
+            document.removeEventListener("click", this.execute);
+
+            
+
+
             const enemySpace: IShip | null = this.computerGameBoard.grid[yShot][xShot];
+            
+            
             if (enemySpace === null) { this.missCommand.execute(clickedHTMLElem); }
             else {
                 this.hitCommand.execute(clickedHTMLElem);
                 enemySpace.hit();
                 if (this.computerGameBoard.ships.every(({ ship }) => ship.isSunk())) {
                     this.gameOverUserWinnerCommand.execute();
+                    // document.removeEventListener("click", this.execute);
+                    return;
 
                 }
 
 
             }
 
-            this.alreadyShotAtSpaces.addNew(coords);
-
-            document.removeEventListener("click", this.execute);
-
             setTimeout(() => {
                 this.fireShotAI.execute();
                 document.addEventListener("click", this.execute); //IN THE SETTIMEOUT THESE TWO NEED TO BE TIED TOGETHER
 
-            }, 5000);
+            }, 1000);
+
+            
         }
     }
 }

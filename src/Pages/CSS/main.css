@@ -7,6 +7,11 @@ main{
     /* background-color: green; */
 
     padding-bottom: 1rem;
+
+    background-image: url(../../Media/Images/ships-at-war.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }
 
 main > div#game-boards-container{

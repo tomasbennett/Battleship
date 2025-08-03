@@ -1,5 +1,5 @@
 import { ICommandHTML, ICommandShipCoords } from "../models/ICommand";
-import { IFindCoordinate, IFindHTML, IFindIndex } from "../models/IFindCoordinate";
+import { IFindCoordinate, IFindHTML, IFindIndex, IFindShipsFullCoords } from "../models/IFindCoordinate";
 import { IGameBoard } from "../models/IGameBoard";
 import { IShipCoordinates } from "../models/IShip";
 
@@ -39,5 +39,29 @@ export class FindShipGameSpaces implements ICommandShipCoords {
             // gameSpaces.push(this.gameSpaceArr[index + verticalFactor * i]);
             this.htmlCommand.execute(this.gameSpaceArr[index + verticalFactor * i]);
         }
+    }
+}
+
+export class FindShipCoordinates implements IFindShipsFullCoords {
+    constructor() {}
+
+    findShipsFullCoords(ship: IShipCoordinates): [number, number][] {
+        const returnCoordsArr: [number, number][] = [];
+        
+        const dx: number = ship.ship.direction === "horizontal" ? 1 : 0;
+        const dy: number = ship.ship.direction === "vertical" ? 1 : 0;
+        
+        for (let i = 0; i < ship.ship.length; i++) {
+            // gameSpaces.push(this.gameSpaceArr[index + verticalFactor * i]);
+            // this.htmlCommand.execute(this.gameSpaceArr[index + verticalFactor * i]);
+
+            const xCoord: number = ship.xCoord + i * dx;
+            const yCoord: number = ship.yCoord + i * dy;
+
+            returnCoordsArr.push([xCoord, yCoord]);
+        }
+
+        return returnCoordsArr;
+        
     }
 }
