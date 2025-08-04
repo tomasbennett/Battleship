@@ -1,0 +1,1 @@
+export const asideContainer: HTMLElement = document.querySelector("aside")!;

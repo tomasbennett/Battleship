@@ -1,8 +1,8 @@
 import { Ship } from "../Ship";
-import { ICommand, ICommandEvent, ICommandHTML } from "../models/ICommand";
+import { ICommand, ICommandEvent, ICommandHTML, ICommandMessage } from "../models/ICommand";
 import { IFindCoordinate, IFindHTML } from "../models/IFindCoordinate";
 import { IGameBoard } from "../models/IGameBoard";
-import { IRegistryCoords } from "../models/IRegistry";
+import { IRegistryCoords, IRegistryHTML } from "../models/IRegistry";
 import { IShip } from "../models/IShip";
 import { ITraverseHTML } from "../models/ITraverse";
 
@@ -44,7 +44,9 @@ export class ShootCommand implements ICommandEvent {
 
         private fireShotAI: ICommand,
 
-        private gameOverUserWinnerCommand: ICommand
+        private gameOverUserWinnerCommand: ICommand,
+
+        private userInfoBox: ICommandMessage
     ) {}
 
     execute: (e: Event | undefined) => void = (e: Event | undefined): void => {
@@ -79,16 +81,33 @@ export class ShootCommand implements ICommandEvent {
             const enemySpace: IShip | null = this.computerGameBoard.grid[yShot][xShot];
             
             
-            if (enemySpace === null) { this.missCommand.execute(clickedHTMLElem); }
+            if (enemySpace === null) { 
+                this.missCommand.execute(clickedHTMLElem);
+                
+                const missMessage: string = `You shot at Row: '${yShot + 1}' and Column: '${xShot + 1}' and missed.`;
+                this.userInfoBox.execute(missMessage);
+
+
+            }
             else {
                 this.hitCommand.execute(clickedHTMLElem);
                 enemySpace.hit();
-                if (this.computerGameBoard.ships.every(({ ship }) => ship.isSunk())) {
-                    this.gameOverUserWinnerCommand.execute();
-                    // document.removeEventListener("click", this.execute);
-                    return;
 
+                const hitMessage: string = `You shot at Row: '${yShot + 1}' and Column: '${xShot + 1}' and it's a hit!`;
+                this.userInfoBox.execute(hitMessage);
+
+                if (enemySpace.isSunk()) {
+                    const sunkMessage: string = `You have sunk the computer's ${enemySpace.name}!`;
+                    this.userInfoBox.execute(sunkMessage);
+
+                    if (this.computerGameBoard.ships.every(({ ship }) => ship.isSunk())) {
+                        this.gameOverUserWinnerCommand.execute();
+                        // document.removeEventListener("click", this.execute);
+                        return;
+    
+                    }
                 }
+
 
 
             }

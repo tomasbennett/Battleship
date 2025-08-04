@@ -16,7 +16,11 @@ import { GridAvailableShots } from "./features/AITargeting/services/GridAvailabl
 import { HitShotHTML, MissedShotHTML } from "./features/AITargeting/services/HTMLShot";
 import { ShipsSunkRegistry } from "./features/AITargeting/services/ShipsSunkRegistry";
 import { CoordinateDirections } from "./features/AITargeting/util/CoordinatesDirection";
-import { ICommand, ICommandEvent, ICommandHTML, ICommandShipCoords } from "./models/ICommand";
+import { asideContainer } from "./features/TextAnimation/components/AsideHTMLContainer";
+import { CreateComputerInfoBox, CreateUserInfoBox } from "./features/TextAnimation/services/CreateTextBox";
+import { InfoBoxRegistry } from "./features/TextAnimation/services/StoreInfoBoxes";
+import { ScrollToBottom } from "./features/TextAnimation/util/ScrollToBottom";
+import { ICommand, ICommandEvent, ICommandHTML, ICommandMessage, ICommandShipCoords } from "./models/ICommand";
 import { IFindCoordinate, IFindIndex, IFindShipsFullCoords } from "./models/IFindCoordinate";
 import { IGameBoard } from "./models/IGameBoard";
 import { IMouseDown } from "./models/IMouseDown";
@@ -102,6 +106,11 @@ const findUsersFullShipsCoords: IFindShipsFullCoords = new FindShipCoordinates()
 
 const userShotAtCoords: IRegistryCoords = new ShotAtCoordsRegistry();
 
+const infoBoxRegistry: IRegistryHTML = new InfoBoxRegistry();
+const scrollCommand: ICommand = new ScrollToBottom(asideContainer);
+
+const infoBoxComputerCommand: ICommandMessage = new CreateComputerInfoBox(asideContainer, infoBoxRegistry, scrollCommand);
+
 const fireShotAI: ICommand = new FireShotAI(
     targetSelector,
     userGameBoard,
@@ -114,9 +123,14 @@ const fireShotAI: ICommand = new FireShotAI(
     gameOverComputer,
     dirDetermination,
     findUsersFullShipsCoords,
-    userShotAtCoords
+    userShotAtCoords,
+    infoBoxComputerCommand
 
 );
+
+
+
+const userInfoBoxCommand: ICommandMessage = new CreateUserInfoBox(asideContainer, infoBoxRegistry, scrollCommand);
 
 const shootCommand: ICommandEvent = new ShootCommand(
     computerGameBoard,
@@ -126,8 +140,8 @@ const shootCommand: ICommandEvent = new ShootCommand(
     missCommand,
     hitCommand,
     fireShotAI,
-    gameOverUser
-
+    gameOverUser,
+    userInfoBoxCommand
 );
 
 
@@ -196,6 +210,9 @@ const findHTMLUserDelete: ICommandShipCoords = new FindShipGameSpaces(
     htmlRemoveShipCommand
 );
 
+
+
+
 const resetAll: ICommandEvent = new RestartAllCommand(
     endGameDialog,
     refreshCommand,
@@ -212,7 +229,8 @@ const resetAll: ICommandEvent = new RestartAllCommand(
     userGameBoard,
     computerGameBoard,
     dialogSelectShips,
-    usersAvailableSpaces
+    usersAvailableSpaces,
+    infoBoxRegistry
 
 
 );

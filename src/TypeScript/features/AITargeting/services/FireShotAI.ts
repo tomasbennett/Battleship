@@ -1,7 +1,7 @@
-import { ICommand, ICommandHTML } from "../../../models/ICommand";
+import { ICommand, ICommandHTML, ICommandMessage } from "../../../models/ICommand";
 import { IFindIndex, IFindShipsFullCoords } from "../../../models/IFindCoordinate";
 import { IGameBoard } from "../../../models/IGameBoard";
-import { IRegistryCoords, IRegistryShips } from "../../../models/IRegistry";
+import { IRegistryCoords, IRegistryHTML, IRegistryShips } from "../../../models/IRegistry";
 import { IShip } from "../../../models/IShip";
 import { IDirectionDetermination } from "../models/ICoordinateDirDetermine";
 import { IRegistryRemoveSpaces } from "../models/IRegistryRemoval";
@@ -30,7 +30,11 @@ export class FireShotAI implements ICommand {
 
         private findUserShipsFullCoords: IFindShipsFullCoords,
 
-        private shotAtCoords: IRegistryCoords
+        private shotAtCoords: IRegistryCoords,
+
+        private createInfoBox: ICommandMessage
+
+        
     ) {}
 
     execute(): void {
@@ -68,9 +72,15 @@ export class FireShotAI implements ICommand {
 
         if (!isHit) {
             this.missShotCommand.execute(gameSpaceDiv);
+            const missMessage: string = `The computer shoots at Row: '${yNextCoords + 1}' and Column: '${xNextCoords + 1}' and missed.`;
+            
+            this.createInfoBox.execute(missMessage);
 
         } else {
             this.hitShotCommand.execute(gameSpaceDiv);
+
+            
+
 
             const shipHit: IShip | null = this.enemyGameBoard.grid[yNextCoords][xNextCoords];
             if (shipHit === null) return;
@@ -91,11 +101,17 @@ export class FireShotAI implements ICommand {
 
             }
 
+
+
+            const hitMessage: string = `The computer has fired at Row: '${yNextCoords + 1}' and Column: '${xNextCoords + 1} and it's a hit!'`;
+            this.createInfoBox.execute(hitMessage);
+
             if (shipHit.isSunk()) {
                 this.shipsSunkRegistry.addNew(shipHit);
 
-                
-                
+                const sunkMessage: string = `The computer has sunk your ${shipHit.name}`;
+                this.createInfoBox.execute(sunkMessage);
+
                 if (this.shipsSunkRegistry.getAll().length >= this.enemyGameBoard.ships.length) {
                     this.gameOverAICommand.execute();
                     return;
@@ -104,6 +120,7 @@ export class FireShotAI implements ICommand {
                 
                 
             }
+            
             
             
         }

@@ -4,7 +4,7 @@ import { ITargetingState } from "../features/AITargeting/models/IStateManager";
 import { ICommand, ICommandEvent, ICommandShipCoords } from "../models/ICommand";
 import { IFindIndex } from "../models/IFindCoordinate";
 import { IGameBoard } from "../models/IGameBoard";
-import { IRegistryCoords, IRegistryShips } from "../models/IRegistry";
+import { IRegistryCoords, IRegistryHTML, IRegistryShips } from "../models/IRegistry";
 
 abstract class GameOverCommand implements ICommand {
     protected abstract userWon: boolean;
@@ -84,7 +84,9 @@ export class RestartAllCommand implements ICommandEvent {
 
         private shipsSelectDialog: HTMLDialogElement,
 
-        private userBoardAvailableTargets: IRegistryRemoveSpaces
+        private userBoardAvailableTargets: IRegistryRemoveSpaces,
+
+        private infoBoxRegistry: IRegistryHTML
     ) {}
 
     public execute: (e: Event | undefined) => void = (e: Event | undefined): void => {
@@ -123,6 +125,7 @@ export class RestartAllCommand implements ICommandEvent {
         this.shipSunkRegistryComputers.refresh();
         this.shipSpacesRegistryComputers.shipSpaces = [];
 
+        this.infoBoxRegistry.refresh();
 
         this.resetDialogShipsSelect.execute(undefined);
 

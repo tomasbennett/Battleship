@@ -54,7 +54,12 @@ export class SelectShip implements ICommandEvent {
                 window.addEventListener("pointermove", shipDragCommand.execute); //TAKE THE SHIP WITH YOU EVERYWHERE
 
                 const shipLength: number = Array.from(shipImg.children).length;
-                const ship: IShip = new Ship(shipLength);
+                const shipName: string = shipContainerHTML.querySelector(".dialog-ship-title")!.textContent!;
+                const spaceIndex: number = shipName.indexOf(" ");
+                const firstWord: string = spaceIndex === -1 ? shipName : shipName.slice(0, spaceIndex);
+                
+                
+                const ship: IShip = new Ship(shipLength, firstWord);
 
                 const highlightCellCommand: ICommandEventLastRun = new ShipCellValid(
                     this.gameBoard,

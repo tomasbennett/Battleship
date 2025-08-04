@@ -7,8 +7,13 @@ export class Ship implements IShip {
 
     public direction: IDirection;
 
+    public get name(): string {
+        return this._name;
+    }
+
     constructor(
-        public length: number
+        public length: number,
+        private _name: string
     ) {
         this.noHits = 0;
 

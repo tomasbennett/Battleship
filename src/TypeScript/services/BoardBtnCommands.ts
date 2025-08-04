@@ -121,7 +121,7 @@ export class SubmitDialogBtnCommand implements ICommandEvent {
         this.gameBoard.ships.forEach((ship) => {
             this.findHTML.execute(ship);
 
-            const computerShip: IShip = new Ship(ship.ship.length);
+            const computerShip: IShip = new Ship(ship.ship.length,  ship.ship.name);
             this.placeComputerShips.findAvailableSpaces(computerShip);
 
         });

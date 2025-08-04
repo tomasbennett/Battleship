@@ -32,15 +32,29 @@ main > div#game-boards-container > div.game-board-container:nth-child(1){
 }
 
 main > div#game-boards-container > div.game-board-container{
-    --bcg-grid: rgba(0, 0, 80, 0.4);
+    /* --bcg-grid: rgba(0, 0, 80, 0.4); */
     
     position: relative;
     
     padding: 1.5rem;
     border-radius: 1rem;
 
+    
+}
+
+
+div.game-board-container#computer-game-board-container{
+    --bcg-grid: rgba(155, 0, 0, 0.75);
+
     background-color: var(--bcg-grid);
 }
+
+div.game-board-container#user-game-board-container{
+    --bcg-grid: rgba(0, 0, 173, 0.75);
+
+    background-color: var(--bcg-grid);
+}
+
 
 main > div#game-boards-container > div.game-board-container::before{
     /* content: 'Computer'; */
@@ -96,3 +110,9 @@ main > div#game-boards-container > div.game-board-container#user-game-board-cont
     content: 'You';
 }
 
+
+@media (width >= 106.25rem) {
+    main .game-board-container{
+        transform: scale(1.3);
+    }
+}

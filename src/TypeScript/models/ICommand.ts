@@ -13,3 +13,5 @@ export type ICommandShipCoords = ICommand<IShipCoordinates>
 export type ICommandEventLastRun = ICommandEvent & {
     lastElements: HTMLElement[]
 }
+
+export type ICommandMessage = ICommand<string>;

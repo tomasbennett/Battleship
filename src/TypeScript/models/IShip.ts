@@ -1,6 +1,7 @@
 import { IDirection } from "./IDirection";
 
 export interface IShip {
+    get name(): string;
     direction: IDirection;
     length: number;
     
