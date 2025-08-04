@@ -17,3 +17,4 @@ export class ShotAtCoordsRegistry implements IRegistryCoords {
         this.shotAtCoords = [];
     }
 }
+

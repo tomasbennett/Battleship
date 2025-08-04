@@ -80,6 +80,7 @@ export class ShootCommand implements ICommandEvent {
 
             const enemySpace: IShip | null = this.computerGameBoard.grid[yShot][xShot];
             
+            clickedHTMLElem.setAttribute("data-cell-available", "already-shot");
             
             if (enemySpace === null) { 
                 this.missCommand.execute(clickedHTMLElem);

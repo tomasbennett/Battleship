@@ -116,3 +116,20 @@ main > div#game-boards-container > div.game-board-container#user-game-board-cont
         transform: scale(1.3);
     }
 }
+
+div#computer-game-board-container div.game-space[data-cell-available="no-interaction"]{
+    cursor: pointer;
+}
+
+div#computer-game-board-container div.game-space[data-cell-available="no-interaction"]:hover{
+    background-color: rgb(0, 163, 218);
+}
+
+
+div#computer-game-board-container div.game-space[data-cell-available="already-shot"]{
+    cursor: not-allowed;
+}
+
+div#computer-game-board-container div.game-space[data-cell-available="already-shot"]:hover{
+    background-color: rgb(182, 0, 0);
+}

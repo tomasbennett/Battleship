@@ -102,11 +102,10 @@ export class RestartAllCommand implements ICommandEvent {
             if (index === null) return;
 
             const gameSpace: HTMLDivElement = this.computerGameSpaces[index];
+            gameSpace.setAttribute("data-cell-available", "no-interaction");
             const svg: HTMLOrSVGElement | null = gameSpace.querySelector("svg");
             if (svg === null) return;
             (svg as HTMLElement).remove();
-
-
 
         });
 
@@ -118,6 +117,7 @@ export class RestartAllCommand implements ICommandEvent {
             const svg: HTMLOrSVGElement | null = gameSpace.querySelector("svg");
             if (svg === null) return;
             (svg as HTMLElement).remove();
+
         });
 
         this.userShotAtCoords.refresh(); //TICK
